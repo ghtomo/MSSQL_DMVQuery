@@ -1,5 +1,5 @@
 -- db_data_size.sql
--- ˆê•\‚Ìì¬
+-- ä¸€æ™‚è¡¨ã®ä½œæˆ
 DECLARE @dm_db_file_space_usage table(
   database_name nvarchar(128)
   , source_database_name nvarchar(128)
@@ -12,7 +12,7 @@ DECLARE @dm_db_file_space_usage table(
   , database_id int
   , file_id int
 );
--- sp_MSforeachdb‚ğg—p‚µŠeƒf[ƒ^ƒx[ƒX‚É‘Î‚µ‚ÄƒNƒGƒŠ‚ğÀs‚µAŒ‹‰Ê‚ğˆê•\‚ÉŠi”[
+-- sp_MSforeachdbã‚’ä½¿ç”¨ã—å„ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«å¯¾ã—ã¦ã‚¯ã‚¨ãƒªã‚’å®Ÿè¡Œã—ã€çµæœã‚’ä¸€æ™‚è¡¨ã«æ ¼ç´
 INSERT INTO 
   @dm_db_file_space_usage
 EXEC sp_MSforeachdb 'USE ?;
@@ -37,5 +37,5 @@ FROM sys.master_files m
 WHERE m.database_id = DB_ID() and m.type = 0
 ORDER BY m.database_id, m.file_id
 '
--- ˆê•\‚ÌŒ‹‰Ê‚ğWŒv‚µ‚Ä•Ô‹p
+-- ä¸€æ™‚è¡¨ã®çµæœã‚’é›†è¨ˆã—ã¦è¿”å´
 select * from @dm_db_file_space_usage ORDER BY database_id, file_id

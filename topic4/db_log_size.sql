@@ -1,5 +1,5 @@
 -- db_log_size.sql
--- �ꎞ�\�̍쐬
+-- 一時表の作成
 DECLARE @dm_db_log_space_usage table(
   database_name nvarchar(128)
   , total_size_kb bigint
@@ -7,11 +7,11 @@ DECLARE @dm_db_log_space_usage table(
   , free_size_kb bigint
   , used_in_percent real
 );
--- sp_MSforeachdb���g�p���e�f�[�^�x�[�X�ɑ΂��ăN�G�������s���A���ʂ��ꎞ�\�Ɋi�[
+-- sp_MSforeachdbを使用し各データベースに対してクエリを実行し、結果を一時表に格納
 INSERT INTO 
   @dm_db_log_space_usage
 EXEC sp_MSforeachdb 'USE ?; 
--- �X�i�b�v�V���b�g�f�[�^�x�[�X�͏��O
+-- スナップショットデータベースは除外
 IF (SELECT count(*) FROM sys.master_files WHERE database_id = DB_ID() AND type = 1) > 0
 BEGIN
   SELECT
@@ -26,5 +26,5 @@ BEGIN
     database_id 
 END
 '
--- �ꎞ�\�̌��ʂ��W�v���ĕԋp
+-- 一時表の結果を集計して返却
 SELECT * FROM @dm_db_log_space_usage

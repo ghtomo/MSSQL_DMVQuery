@@ -1,6 +1,6 @@
 -- table_data_size.sql
 USE DB001
--- ˆê•\‚Ìì¬
+-- ä¸€æ™‚è¡¨ã®ä½œæˆ
 DECLARE @temp table(
   name NVARCHAR(128)
   , rows bigint
@@ -9,9 +9,9 @@ DECLARE @temp table(
   , index_size nvarchar(80)
   , unused nvarchar(80)
 );
--- ƒe[ƒuƒ‹‚²‚Æ‚Ésp_spaceused‚ğÀs‚µŒ‹‰Ê‚ğˆê•\‚É“o˜^
+-- ãƒ†ãƒ¼ãƒ–ãƒ«ã”ã¨ã«sp_spaceusedã‚’å®Ÿè¡Œã—çµæœã‚’ä¸€æ™‚è¡¨ã«ç™»éŒ²
 INSERT INTO
   @temp
 EXEC sp_MSforeachtable N'exec sp_spaceused ''?''';
--- Œ‹‰Ê‚ğo—Í
+-- çµæœã‚’å‡ºåŠ›
 SELECT * FROM @temp
