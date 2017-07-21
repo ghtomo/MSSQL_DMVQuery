@@ -22,12 +22,18 @@ SELECT
   , m.name
   , m.physical_name
   , u.total_page_count * 8 AS total_size_kb
-  , (CASE m.is_sparse 
+  , used_size_kb = (CASE m.is_sparse 
       WHEN 1 THEN i.size_on_disk_bytes / 1024
       ELSE u.allocated_extent_page_count * 8 END 
-    ) AS used_size_kb
-  , u.unallocated_extent_page_count * 8 AS free_size_kb
-  , FORMAT(CONVERT(decimal, u.allocated_extent_page_count) / u.total_page_count * 100, ''0.00'') AS used_in_percent
+    )
+  , free_size_kb = (CASE m.is_sparse 
+      WHEN 1 THEN NULL
+      ELSE u.unallocated_extent_page_count * 8 END 
+    )
+  , used_in_percent = (CASE m.is_sparse 
+      WHEN 1 THEN NULL
+      ELSE FORMAT(CONVERT(decimal, u.allocated_extent_page_count) / u.total_page_count * 100, ''0.00'') END 
+    )
   , m.database_id
   , m.file_id
 FROM sys.master_files m 
