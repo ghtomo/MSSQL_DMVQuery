@@ -1,3 +1,4 @@
+--table_row_count.sql
 USE DB001
 SELECT 
     o.name AS TableName
