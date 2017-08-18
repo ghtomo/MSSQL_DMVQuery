@@ -1,4 +1,4 @@
--- db_data_size.sql
+-- db_data_size.sql 　updated gho9o9
 -- 一時表の作成
 DECLARE @dm_db_file_space_usage table(
   database_name nvarchar(128)
