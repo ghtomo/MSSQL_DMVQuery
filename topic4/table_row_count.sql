@@ -1,4 +1,4 @@
--- table_row_count.sql　updated gho9o9
+--table_row_count.sql　updated gho9o9
 USE DB001
 SELECT 
     o.name AS TableName
